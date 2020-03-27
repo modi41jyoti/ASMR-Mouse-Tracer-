@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Canvas Follow Mouse</title>
+  <style>
+    canvas {
+      border: #333 10px solid;
+    }
+ 
+  </style>
+</head>
+ 
+<body>
+  <canvas id="myCanvas" width="1380px" height="760px"></canvas>
+ 
+  <script>
+    var canvas = document.querySelector("#myCanvas");
+    var context = canvas.getContext("2d");
+
+     function update() {
+     	// context.clearRect(0, 0, canvas.width, canvas.height);
+
+		context.beginPath();
+		context.arc(mouseX, mouseY, 50, 0, 2 * Math.PI, true);
+		context.fillStyle = `rgba(${Math.ceil(Math.random()* 255)}, ${Math.ceil(Math.random()* 255)}, ${Math.ceil(Math.random()* 255)}, ${Math.ceil(Math.random()* 1)})`;
+		context.fill();
+
+		requestAnimationFrame(update);
+	  }
+
+	  update();
+
+	  var canvasPos = getPosition(canvas);
+	  var mouseX = 0;
+	  var mouseY = 0;
+ 
+	canvas.addEventListener("mousemove", setMousePosition, false);
+ 
+	function setMousePosition(e) {
+	   mouseX = e.clientX - canvasPos.x;
+  	   mouseY = e.clientY - canvasPos.y;
+
+  	  // context.clearRect(0, 0, canvas.width, canvas.height);
+ 
+	  context.beginPath();
+	  context.arc(mouseX, mouseY, 50, 0, 2 * Math.PI, true);
+	  context.fillStyle = `rgba(${Math.ceil(Math.random()* 255)}, ${Math.ceil(Math.random()* 255)}, ${Math.ceil(Math.random()* 255)}, ${Math.ceil(Math.random()* 1)})`;
+	  context.fill();
+		
+	} 
+	function getPosition(el) {
+	  	var xPosition = 0;
+	  	var yPosition = 0;
+	 
+	  while (el) {
+	    xPosition += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+	    yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
+	    el = el.offsetParent;
+	  }
+	 return {
+	    x: xPosition,
+	    y: yPosition
+	  };
+	} 
+  </script>
+ 
+</body>
+ 
+</html>
